@@ -1,13 +1,10 @@
 import game_engine.*;
 import java.util.Random;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 class MainScene extends Scene {
 
     public void load (Game game) {
-
-        this.reset();
 
         // Background game object
         GameObject background = new GameObject(game, this, true, game.windowWidth/2, game.windowHeight/2, 2, 2, 90);
@@ -47,11 +44,12 @@ class MainScene extends Scene {
         character.addComponent(playerCollider);
         this.addGameObject(character, "player");
 
-        int boidCount = 250;
+        int boidCount = 50;
         // Instatiate 10 Boid game objects
         for (int i = 0; i < boidCount; i++) {
             GameObject boid = new Boid(game, this, rng.nextInt(game.windowWidth), 
                                                 game.windowHeight + 10);
+            boid.getComponents(FollowPlayer.class).get(0).player = character;
             this.addGameObject(boid, "boid");
         }
         
